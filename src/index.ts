@@ -77,6 +77,12 @@ export type ConcurrentlyOptions = BaseConcurrentlyOptions & {
      * @see LogTimings
      */
     timings?: boolean,
+
+    /**
+     * List of additional arguments passed that will get replaced in each command.
+     * If not defined, no argument replacing will happen.
+     */
+    additionalArguments?: string[],
 };
 
 export default (commands: ConcurrentlyCommandInput[], options: Partial<ConcurrentlyOptions> = {}) => {
@@ -114,14 +120,15 @@ export default (commands: ConcurrentlyCommandInput[], options: Partial<Concurren
             }),
             new KillOthers({
                 logger,
-                conditions: options.killOthers
+                conditions: options.killOthers,
             }),
             new LogTimings({
                 logger: options.timings ? logger : null,
                 timestampFormat: options.timestampFormat,
-            })
+            }),
         ],
         prefixColors: options.prefixColors || [],
+        additionalArguments: options.additionalArguments,
     });
 };
 

@@ -27,6 +27,10 @@ export interface CommandInfo {
      * The current working directory of the process when spawned.
      */
     cwd?: string,
+
+    /**
+     * Color to use on prefix of command.
+     */
     prefixColor?: string,
 }
 
@@ -161,7 +165,7 @@ export class Command implements CommandInfo {
                     startDate,
                     endDate,
                     durationSeconds: durationSeconds + (durationNanoSeconds / 1e9),
-                }
+                },
             });
         });
         child.stdout && pipeTo(Rx.fromEvent<Buffer>(child.stdout, 'data'), this.stdout);
